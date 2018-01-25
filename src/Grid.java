@@ -1,12 +1,10 @@
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 public class Grid
 {
@@ -149,6 +147,10 @@ public class Grid
             String content = problem.getResultPath().toString();
             String path = "./solutions/" + problem.getNumber() + ".txt";
 
+            if (!FormatChecker.parse_opening_bracket(new StringTokenizer(content + System.lineSeparator()))) {
+                throw new RuntimeException(String.format("Invalid format: \"%s\"", content));
+            }
+
             new File(path).getParentFile().mkdirs();
 
             try {
@@ -159,23 +161,8 @@ public class Grid
         }
     }
 
-    public void exportTriangles()
+    public void graph()
     {
-        StringBuilder content = new StringBuilder();
-        for (Triangle triangle : getTriangles()) {
-            content.append(triangle.toString()).append("\n");
-        }
-
-        String path = "./triangles.txt";
-
-        try {
-            Files.write(Paths.get(path), content.toString().getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void graph() {
         Graph g = new Graph(this);
 
         g.graph();

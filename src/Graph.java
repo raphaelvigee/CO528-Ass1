@@ -1,7 +1,9 @@
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +24,7 @@ public class Graph
 
     public void graph()
     {
-        final BufferedImage image = new BufferedImage(scale(grid.getWidth()), scale(grid.getHeight()), BufferedImage.TYPE_INT_RGB);
+        BufferedImage image = new BufferedImage(scale(grid.getWidth()), scale(grid.getHeight()), BufferedImage.TYPE_INT_RGB);
 
         Graphics2D g = image.createGraphics();
         g.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
@@ -95,7 +97,13 @@ public class Graph
             g.setStroke(new BasicStroke(1));
         }
 
+        AffineTransform tx = AffineTransform.getScaleInstance(1, -1);
+        tx.translate(0, -image.getHeight());
+        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+        image = op.filter(image, null);
+
         g.drawImage(image, null, 0, 0);
+
         try {
             ImageIO.write(image, "JPEG", new File("graph.jpg"));
         } catch (IOException e) {

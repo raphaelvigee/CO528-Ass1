@@ -37,7 +37,6 @@ public class Main
         grid.solve();
 
         grid.exportSolutions();
-        grid.exportTriangles();
 
         grid.graph();
     }
