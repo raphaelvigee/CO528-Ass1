@@ -1,3 +1,5 @@
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -171,5 +173,11 @@ public class Grid
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void graph() {
+        Graph g = new Graph(this);
+
+        g.graph();
     }
 }

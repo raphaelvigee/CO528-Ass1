@@ -38,5 +38,7 @@ public class Main
 
         grid.exportSolutions();
         grid.exportTriangles();
+
+        grid.graph();
     }
 }
