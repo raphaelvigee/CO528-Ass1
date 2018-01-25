@@ -1,5 +1,6 @@
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -21,7 +22,7 @@ public class Graph
 
     public void graph()
     {
-        final BufferedImage image = new BufferedImage(scale(24), scale(24), BufferedImage.TYPE_INT_RGB);
+        final BufferedImage image = new BufferedImage(scale(grid.getWidth()), scale(grid.getHeight()), BufferedImage.TYPE_INT_RGB);
 
         Graphics2D g = image.createGraphics();
         g.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
@@ -34,7 +35,23 @@ public class Graph
         g.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
 
         g.setColor(Color.WHITE);
-        g.fillRect(0, 0, scale(24), scale(24));
+        g.fillRect(0, 0, scale(grid.getWidth()), scale(grid.getHeight()));
+
+        for (int x = 0; x < grid.getWidth(); x++) {
+            Line2D line = new Line2D.Double();
+            line.setLine(scale(x), scale(0), scale(x), scale(grid.getHeight()));
+
+            g.setColor(Color.LIGHT_GRAY);
+            g.draw(line);
+        }
+
+        for (int y = 0; y < grid.getHeight(); y++) {
+            Line2D line = new Line2D.Double();
+            line.setLine(scale(0), scale(y), scale(grid.getWidth()), scale(y));
+
+            g.setColor(Color.LIGHT_GRAY);
+            g.draw(line);
+        }
 
         for (Triangle triangle : grid.getTriangles()) {
 

@@ -180,4 +180,14 @@ public class Grid
 
         g.graph();
     }
+
+    public int getWidth()
+    {
+        return width;
+    }
+
+    public int getHeight()
+    {
+        return height;
+    }
 }
