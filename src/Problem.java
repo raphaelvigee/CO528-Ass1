@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Problem
 {
     private int number;
@@ -5,6 +8,10 @@ public class Problem
     private Vertex start;
 
     private Vertex finish;
+
+    private List<Path> paths = new ArrayList<>();
+
+    private Path resultPath = null;
 
     public Problem(int number, Vertex start, Vertex finish)
     {
@@ -26,5 +33,31 @@ public class Problem
     public int getNumber()
     {
         return number;
+    }
+
+    public List<Path> getPaths()
+    {
+        return paths;
+    }
+
+    public Path getResultPath()
+    {
+        return resultPath;
+    }
+
+    public void setResultPath(Path resultPath)
+    {
+        this.resultPath = resultPath;
+    }
+
+    public boolean isInPaths(Vertex v)
+    {
+        for (Path problemPath : getPaths()) {
+            if (problemPath.getVertexes().contains(v)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

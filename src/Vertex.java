@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Vertex implements Comparable<Vertex>
 {
     private int x;
@@ -32,5 +34,23 @@ public class Vertex implements Comparable<Vertex>
     public String toString()
     {
         return "(" + x + ", " + y + ")";
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Vertex vertex = (Vertex) o;
+        return x == vertex.x &&
+                y == vertex.y;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(x, y);
     }
 }

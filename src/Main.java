@@ -2,7 +2,7 @@ public class Main
 {
     public static void main(String[] args)
     {
-        Grid grid = new Grid(25, 25);
+        Grid grid = new Grid(24, 24);
 
         grid.addTriangle(new Triangle(new Vertex(11, 0), new Vertex(13, 1), new Vertex(18, 5)));
         grid.addTriangle(new Triangle(new Vertex(5, 4), new Vertex(7, 9), new Vertex(5, 8)));

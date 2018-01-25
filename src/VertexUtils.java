@@ -121,4 +121,11 @@ public class VertexUtils
         }
     }
 
+    public static boolean inlined(Vertex v1, Vertex v2, Vertex v3)
+    {
+        boolean horizontal = v1.get_x() == v2.get_x() && v2.get_x() == v3.get_x();
+        boolean vertical = v1.get_y() == v2.get_y() && v2.get_y() == v3.get_y();
+
+        return horizontal || vertical;
+    }
 }

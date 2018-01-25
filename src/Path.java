@@ -1,10 +1,18 @@
-import java.util.HashSet;
-import java.util.Set;
+import java.util.LinkedList;
 import java.util.stream.Collectors;
 
 public class Path
 {
-    private Set<Vertex> vertexes = new HashSet<>();
+    private LinkedList<Vertex> vertexes = new LinkedList<>();
+
+    public Path()
+    {
+    }
+
+    public Path(Vertex start)
+    {
+        add(start);
+    }
 
     public void add(Vertex v)
     {
@@ -19,7 +27,7 @@ public class Path
                 .collect(Collectors.joining(" "));
     }
 
-    public Set<Vertex> getVertexes()
+    public LinkedList<Vertex> getVertexes()
     {
         return vertexes;
     }
@@ -31,5 +39,10 @@ public class Path
         getVertexes().forEach(newPath::add);
 
         return newPath;
+    }
+
+    public Vertex getLast()
+    {
+        return getVertexes().getLast();
     }
 }
