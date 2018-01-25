@@ -1,7 +1,9 @@
 public class Triangle
 {
     private Vertex v1;
+
     private Vertex v2;
+
     private Vertex v3;
 
     public Triangle(Vertex v1, Vertex v2, Vertex v3)
@@ -24,5 +26,11 @@ public class Triangle
     public Vertex getV3()
     {
         return v3;
+    }
+
+    @Override
+    public String toString()
+    {
+        return v1 + " " + v2 + " " + v3;
     }
 }

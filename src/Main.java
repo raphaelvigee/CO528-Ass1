@@ -35,5 +35,8 @@ public class Main
         grid.addProblem(new Problem(11, new Vertex(5, 20), new Vertex(19, 7)));
 
         grid.solve();
+
+        grid.exportSolutions();
+        grid.exportTriangles();
     }
 }

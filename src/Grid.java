@@ -1,3 +1,8 @@
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -133,5 +138,38 @@ public class Grid
         }
 
         return true;
+    }
+
+    public void exportSolutions()
+    {
+        for (Problem problem : getProblems()) {
+
+            String content = problem.getResultPath().toString();
+            String path = "./solutions/" + problem.getNumber() + ".txt";
+
+            new File(path).getParentFile().mkdirs();
+
+            try {
+                Files.write(Paths.get(path), content.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void exportTriangles()
+    {
+        StringBuilder content = new StringBuilder();
+        for (Triangle triangle : getTriangles()) {
+            content.append(triangle.toString()).append("\n");
+        }
+
+        String path = "./triangles.txt";
+
+        try {
+            Files.write(Paths.get(path), content.toString().getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
