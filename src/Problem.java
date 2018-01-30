@@ -50,14 +50,13 @@ public class Problem
         this.resultPath = resultPath;
     }
 
+    public boolean hasResultPath()
+    {
+        return getResultPath() != null;
+    }
+
     public boolean isInPaths(Vertex v)
     {
-        for (Path problemPath : getPaths()) {
-            if (problemPath.getVertexes().contains(v)) {
-                return true;
-            }
-        }
-
-        return false;
+        return VertexUtils.isInPaths(getPaths(), v);
     }
 }

@@ -12,22 +12,22 @@ public class Vertex implements Comparable<Vertex>
         this.y = y;
     }
 
-    public int get_x()
+    public int getX()
     {
         return x;
     }
 
-    public int get_y()
+    public int getY()
     {
         return y;
     }
 
     public int compareTo(Vertex v)
     {
-        if (v.get_x() == get_x()) {
-            return v.get_y() - get_y();
+        if (v.getX() == getX()) {
+            return v.getY() - getY();
         } else {
-            return v.get_x() - get_x();
+            return v.getX() - getX();
         }
     }
 

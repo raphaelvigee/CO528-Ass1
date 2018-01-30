@@ -60,13 +60,13 @@ public class Graph
             Polygon polygon = new Polygon();
 
             Vertex v1 = triangle.getV1();
-            polygon.addPoint(scale(v1.get_x()), scale(v1.get_y()));
+            polygon.addPoint(scale(v1.getX()), scale(v1.getY()));
 
             Vertex v2 = triangle.getV2();
-            polygon.addPoint(scale(v2.get_x()), scale(v2.get_y()));
+            polygon.addPoint(scale(v2.getX()), scale(v2.getY()));
 
             Vertex v3 = triangle.getV3();
-            polygon.addPoint(scale(v3.get_x()), scale(v3.get_y()));
+            polygon.addPoint(scale(v3.getX()), scale(v3.getY()));
 
             g.setColor(Color.BLACK);
             g.draw(polygon);
@@ -85,9 +85,9 @@ public class Graph
                 Vertex v = resultPath.getVertexes().get(i);
 
                 if (i == 0) {
-                    polyline.moveTo(scale(v.get_x()), scale(v.get_y()));
+                    polyline.moveTo(scale(v.getX()), scale(v.getY()));
                 } else {
-                    polyline.lineTo(scale(v.get_x()), scale(v.get_y()));
+                    polyline.lineTo(scale(v.getX()), scale(v.getY()));
                 }
             }
 

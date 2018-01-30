@@ -45,4 +45,9 @@ public class Path
     {
         return getVertexes().getLast();
     }
+
+    public int size()
+    {
+        return getVertexes().size();
+    }
 }

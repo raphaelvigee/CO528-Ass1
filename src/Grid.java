@@ -44,13 +44,20 @@ public class Grid
 
     public void solve()
     {
+        int sum = 0;
+
         for (Problem problem : problems) {
             solve(problem);
 
-            problem.getPaths().clear();
-
-            System.out.println("Problem " + problem.getNumber() + " solved: " + problem.getResultPath());
+            if (problem.hasResultPath()) {
+                Path resultPath = problem.getResultPath();
+                System.out.println(String.format("Problem %d solved (%d): %s", problem.getNumber(), resultPath.size(), resultPath));
+                sum += resultPath.size() - 1;
+            }
         }
+
+        System.out.println();
+        System.out.println("Total: " + sum);
     }
 
     private void solve(Problem problem)
@@ -59,7 +66,7 @@ public class Grid
 
         problem.getPaths().add(root);
 
-        while (problem.getResultPath() == null) {
+        while (!problem.hasResultPath()) {
             if (!propagatePaths(problem)) {
                 System.out.println(problem.getNumber() + ": Stuck");
                 return;
@@ -69,56 +76,58 @@ public class Grid
 
     private boolean propagatePaths(Problem problem)
     {
-        boolean hasChanged = false;
+        List<Path> nextConfigs = nextConfigs(problem);
 
-        List<Path> paths = new ArrayList<>(problem.getPaths());
+        for (Path nextConfig : nextConfigs) {
+            if (nextConfig.getLast().equals(problem.getFinish())) {
+                problem.setResultPath(nextConfig);
+                problem.getPaths().clear();
 
-        for (Path path : paths) {
-            if (propagatePath(problem, path)) {
-                hasChanged = true;
-            } else {
+                return true;
+            }
+        }
+
+        problem.getPaths().addAll(nextConfigs);
+
+        return !nextConfigs.isEmpty();
+    }
+
+    private List<Path> nextConfigs(Problem problem)
+    {
+        List<Path> nextPaths = new ArrayList<>();
+
+        List<Path> currentPaths = new ArrayList<>(problem.getPaths());
+
+        for (Path path : currentPaths) {
+            for (int x = 0; x < width; x++) {
+                for (int y = 0; y < height; y++) {
+                    Vertex nextVertex = new Vertex(x, y);
+
+                    if (path.getVertexes().contains(nextVertex)) {
+                        continue;
+                    }
+
+                    if (VertexUtils.isInPaths(nextPaths, nextVertex)) {
+                        continue;
+                    }
+
+                    if (!isValid(path.getLast(), nextVertex)) {
+                        continue;
+                    }
+
+                    Path nextPath = path.clone();
+                    nextPath.add(nextVertex);
+
+                    nextPaths.add(nextPath);
+                }
+            }
+
+            if (nextPaths.isEmpty()) {
                 problem.getPaths().remove(path);
             }
         }
 
-        return hasChanged;
-    }
-
-    private boolean propagatePath(Problem problem, Path path)
-    {
-        boolean hasChanged = false;
-
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                Vertex next = new Vertex(x, y);
-
-                if (path.getVertexes().contains(next)) {
-                    continue;
-                }
-
-                if (problem.isInPaths(next)) {
-                    continue;
-                }
-
-                if (!isValid(path.getLast(), next)) {
-                    continue;
-                }
-
-                Path nextPath = path.clone();
-                nextPath.add(next);
-
-                if (next.equals(problem.getFinish())) {
-                    problem.setResultPath(nextPath);
-                    return true;
-                } else {
-                    problem.getPaths().add(nextPath);
-                }
-
-                hasChanged = true;
-            }
-        }
-
-        return hasChanged;
+        return nextPaths;
     }
 
     private boolean isValid(Vertex last, Vertex next)

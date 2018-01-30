@@ -1,3 +1,5 @@
+import java.util.Collection;
+
 public class VertexUtils
 {
     interface Predicate
@@ -10,11 +12,11 @@ public class VertexUtils
 	/* check whether the vertex u falls within a given line segment where
            the line segment connects vertices v1 and v2 (but does not include them) */
 
-        int a = v1.get_x() - v2.get_x();
-        int b = u.get_x() - v2.get_x();
+        int a = v1.getX() - v2.getX();
+        int b = u.getX() - v2.getX();
 
-        int c = v1.get_y() - v2.get_y();
-        int d = u.get_y() - v2.get_y();
+        int c = v1.getY() - v2.getY();
+        int d = u.getY() - v2.getY();
 
 	/* check whether the simultaneous equations a mu = b and c mu = d
            has a solution 0 < mu < 1
@@ -46,13 +48,13 @@ public class VertexUtils
            line segment 1 connects vertices u1 and u2 (but does not include them) and
            line segment 2 connects vertices v1 and v2 (but does not include them) */
 
-        int a = u1.get_x() - u2.get_x();
-        int b = v2.get_x() - v1.get_x();
-        int c = v2.get_x() - u2.get_x();
+        int a = u1.getX() - u2.getX();
+        int b = v2.getX() - v1.getX();
+        int c = v2.getX() - u2.getX();
 
-        int d = u1.get_y() - u2.get_y();
-        int e = v2.get_y() - v1.get_y();
-        int f = v2.get_y() - u2.get_y();
+        int d = u1.getY() - u2.getY();
+        int e = v2.getY() - v1.getY();
+        int f = v2.getY() - u2.getY();
 
 	/* check whether the simultaneous equations a mu + b lambda = c and d mu + e lambda = f
            has a solution 0 < mu < 1 and 0 < lambda < 1
@@ -79,13 +81,13 @@ public class VertexUtils
            perimeter of the triangle; it only returns true if u occurs in the interior
 	   of the triangle. */
 
-        int a = v1.get_x() - v3.get_x();
-        int b = v2.get_x() - v3.get_x();
-        int c = u.get_x() - v3.get_x();
+        int a = v1.getX() - v3.getX();
+        int b = v2.getX() - v3.getX();
+        int c = u.getX() - v3.getX();
 
-        int d = v1.get_y() - v3.get_y();
-        int e = v2.get_y() - v3.get_y();
-        int f = u.get_y() - v3.get_y();
+        int d = v1.getY() - v3.getY();
+        int e = v2.getY() - v3.getY();
+        int f = u.getY() - v3.getY();
 
 	/* check whether the simultaneous equations a mu + b lambda = c and d mu + e lambda = f
            has a solution 0 < mu, 0 < lambda and mu + lambda < 1
@@ -119,5 +121,16 @@ public class VertexUtils
 
             return p.predicate(denominator, lambda_numerator, mu_numerator);
         }
+    }
+
+    public static boolean isInPaths(Collection<Path> paths, Vertex v)
+    {
+        for (Path problemPath : paths) {
+            if (problemPath.getVertexes().contains(v)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
